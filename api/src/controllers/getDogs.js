@@ -5,29 +5,38 @@ const { YOUR_API_KEY } = process.env;
 
 const getDogs = async (req, res) => {
   const { name } = req.query;
+  let dogs = [];
+
   try {
+    const { data } = await axios.get(`${URL}?api_key=${YOUR_API_KEY}`);
+
     if (name) {
-      const { data } = await axios.get(
-        `https://api.thedogapi.com/v1/breeds/search?q=${name}`
-      );
-      res.json(data);
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].name.toLowerCase().includes(name.toLowerCase())) {
+          dogs.push(data[i]);
+        }
+      }
+      return res.status(200).json(dogs);
     } else {
-      const { data } = await axios.get(`${URL}?api_key=${YOUR_API_KEY}`);
-      res.status(200).json(data);
+      return res.status(200).json(data);
     }
   } catch (error) {
-    res.json({ err: error.message });
+    return res.json({ err: error.message });
   }
 };
 
 const getDogsByID = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
+
   try {
-    const { data } = await axios.get(`${URL}/${id}?api_key=${YOUR_API_KEY}`);
-    res.json(data);
+    const { data } = await axios.get(`${URL}?api_key=${YOUR_API_KEY}`);
+
+    const dog = data.find((element) => element.id === Number(id));
+    if (dog) {
+      return res.status(200).json(dog);
+    }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };
 
