@@ -30,7 +30,20 @@ const getDogs = async (req, res) => {
       }
       return res.status(200).json(dogs);
     } else {
-      res.status(200).json(data);
+      const dogDB = await Dog.findAll({
+        include: [
+          {
+            model: Temperament,
+            attributes: ["name"],
+            through: {
+              attributes: [],
+            },
+          },
+        ],
+      });
+
+      const allDogs = [...data].concat(dogDB);
+      res.status(200).json(allDogs);
     }
   } catch (error) {
     return res.json({ err: error.message });
