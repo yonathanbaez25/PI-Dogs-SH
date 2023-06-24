@@ -1,11 +1,17 @@
-const { Dog } = require("../db");
+const { Dog, Temperament } = require("../db");
 
 const postDog = async (req, res) => {
-  const { image, name, height, weight, years_of_live } = req.body;
   try {
-    const newDog = await Dog.findOrCreate({
-      where: { image, name, height, weight, years_of_live },
+    const { image, name, height, weight, life_span, temperaments } = req.body;
+    const newDog = await Dog.create({
+      image,
+      name,
+      height,
+      weight,
+      life_span,
     });
+
+    await newDog.addTemperament(temperaments);
 
     return res.status(200).json(newDog);
   } catch (error) {

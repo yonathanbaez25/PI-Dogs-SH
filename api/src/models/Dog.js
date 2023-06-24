@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
     {
       id: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        defaultValue: DataTypes.UUIDV1,
         primaryKey: true,
         allowNull: false,
       },
@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      years_of_live: {
+      life_span: {
         type: DataTypes.STRING,
         allowNull: false,
       },
