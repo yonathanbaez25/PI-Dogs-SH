@@ -17,10 +17,34 @@ const getDogs = async (req, res) => {
         where: {
           name: { [Op.iLike]: `%${name}%` },
         },
-        include: Temperament,
+        include: {
+          model: Temperament,
+          attributes: ["name"],
+          through: {
+            attributes: [],
+          },
+        },
       });
       if (dog.length !== 0) {
-        return res.status(200).json(dog);
+        const dogsDBn = dog.map((dog) => {
+          const { id, image, name, height, weight, life_span, temperaments } =
+            dog;
+          const temperament = temperaments.map((temp) => temp.name);
+
+          return {
+            id,
+            image,
+            name,
+            height,
+            weight,
+            life_span,
+            temperament,
+          };
+        });
+        const dbDogs = [];
+
+        dbDogs.push(...dogsDBn);
+        return res.status(200).json(dbDogs);
       }
 
       for (let i = 0; i < data.length; i++) {
@@ -31,18 +55,35 @@ const getDogs = async (req, res) => {
       return res.status(200).json(dogs);
     } else {
       const dogDB = await Dog.findAll({
-        include: [
-          {
-            model: Temperament,
-            attributes: ["name"],
-            through: {
-              attributes: [],
-            },
+        include: {
+          model: Temperament,
+          attributes: ["name"],
+          through: {
+            attributes: [],
           },
-        ],
+        },
       });
 
-      const allDogs = [...data].concat(dogDB);
+      const dogsDBn = dogDB.map((dog) => {
+        const { id, image, name, height, weight, life_span, temperaments } =
+          dog;
+        const temperament = temperaments.map((temp) => temp.name);
+
+        return {
+          id,
+          image,
+          name,
+          height,
+          weight,
+          life_span,
+          temperament,
+        };
+      });
+      const dbDogs = [];
+
+      dbDogs.push(...dogsDBn);
+
+      const allDogs = [...data].concat(dbDogs);
       res.status(200).json(allDogs);
     }
   } catch (error) {
@@ -61,9 +102,42 @@ const getDogsByID = async (req, res) => {
         return res.status(200).json(dog);
       }
     } else {
-      const dogDB = await Dog.findByPk(id);
-      if (dogDB) {
-        return res.status(200).json(dogDB);
+      const dogDB1 = await Dog.findByPk(id, {
+        include: {
+          model: Temperament,
+          attributes: ["name"],
+          through: {
+            attributes: [],
+          },
+        },
+      });
+      const dogDB = [];
+
+      dogDB.push(dogDB1);
+
+      console.log(dogDB);
+
+      const dogsDBn = dogDB.map((dog) => {
+        const { id, image, name, height, weight, life_span, temperaments } =
+          dog;
+        const temperament = temperaments.map((temp) => temp.name);
+
+        return {
+          id,
+          image,
+          name,
+          height,
+          weight,
+          life_span,
+          temperament,
+        };
+      });
+      const dbDogs = [];
+
+      dbDogs.push(...dogsDBn);
+
+      if (dbDogs) {
+        return res.status(200).json(dbDogs);
       }
     }
   } catch (error) {
