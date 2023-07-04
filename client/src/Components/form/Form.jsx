@@ -1,9 +1,10 @@
 import React from "react";
+import CreateDog from "../createDog/CreateDog";
 
 export default function Form(props) {
   return (
     <div>
-      <h1>Form</h1>
+      <CreateDog />
     </div>
   );
 }
