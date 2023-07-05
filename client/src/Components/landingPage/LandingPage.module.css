@@ -19,6 +19,24 @@ body {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+.title {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-size: 76px;
+  color: green;
+  font-family: monospace;
+  -webkit-text-stroke: 2px rgb(255, 255, 255);
+}
+
+.subTitle {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-size: 30px;
+  color: gold;
+  font-family: monospace;
+  -webkit-text-stroke: 1px rgb(255, 255, 255);
+}
+
 img {
   width: 100%;
   height: 100%;
@@ -49,13 +67,13 @@ img {
   font-size: larger;
   font-weight: 900;
   justify-content: center;
-  background-color: #026d30;
+  background-color: green;
   color: #ffffff;
   cursor: pointer;
 }
 
 .buttonSubmit:hover {
   background-color: gold;
-  border: 2px solid #026d30;
+  border: 2px solid green;
   color: black;
 }

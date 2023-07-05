@@ -14,6 +14,7 @@ import {
 import Cards from "../cards/Cards";
 import SearchBar from "../searchBar/SearchBar";
 import { Pagination } from "../pagination/Pagination";
+import logoPI from "../../img/Logo PI.png";
 
 import Style from "./Home.module.css";
 import { Link } from "react-router-dom";
@@ -122,55 +123,80 @@ export default function Home() {
 
   return (
     <div className={Style.homeContainer}>
-      <div className={Style.cardFilterContainer}>
-        <div className={Style.filters}>
-          <span> Filter by temperament </span>
-          <select value={temperament} onChange={handleSelectTemperament}>
-            <option value="all"> All </option>
-            {temperaments.map((temp) => (
-              <option onClick={handleClick}>{temp.name}</option>
-            ))}
-          </select>
-          <br />
-          <span> Sort by weight </span>
-          <select value={filterWeight} onChange={handleSortWeight}>
-            <option value="normal"> ----- </option>
-            <option value="asc"> Lightest </option>
-            <option value="desc"> Heaviest</option>
-          </select>
-          <br />
-          <span> Sort by breed </span>
-          <select value={filterCreate} onChange={handleSortCreate}>
-            <option value="all"> All </option>
-            <option value="api"> Api </option>
-            <option value="created"> Created </option>
-          </select>
-          <br />
-          <span> Sort by name </span>
-          <select value={filterOrder} onChange={handleSortOrder}>
-            <option value="az"> A - Z </option>
-            <option value="za"> Z - A</option>
-          </select>
-          <br />
+      <div className={Style.topBar}>
+        <div className={Style.seBar}>
           <div className={Style.buttonCreate}>
             <Link to="/form" style={{ textDecoration: "none", color: "black" }}>
-              Create a new breed
+              Create new breed
             </Link>
           </div>
+          <div className={Style.logo}>
+            <img src={logoPI} alt={logoPI} />
+          </div>
         </div>
-        <h1 className={Style.homeTitle}>Home Page</h1>
-        <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} />
-
-        <Cards allDogs={currentDogs} />
-        <Pagination
-          dogsCardsPerPage={dogsCardsPerPage}
-          allDogs={allDog.length}
-          paginado={paginado}
-          paginadoPrev={paginadoPrev}
-          paginadoNext={paginadoNext}
-          currentPage={currentPage}
-        />
       </div>
+      <h1 className={Style.homeTitle}>PI Dogs</h1>
+
+      <div className={Style.filters}>
+        <span> By Temperament </span>
+        <select
+          className={Style.select}
+          value={temperament}
+          onChange={handleSelectTemperament}
+        >
+          <option value="all"> All </option>
+          {temperaments.map((temp) => (
+            <option onClick={handleClick}>{temp.name}</option>
+          ))}
+        </select>
+        <br />
+        <span> Sort by Weight </span>
+        <select
+          className={Style.select}
+          value={filterWeight}
+          onChange={handleSortWeight}
+        >
+          <option value="normal"> ----- </option>
+          <option value="asc"> Lightest </option>
+          <option value="desc"> Heaviest</option>
+        </select>
+        <br />
+      </div>
+
+      <div className={Style.filters}>
+        <span> Sort by Created </span>
+        <select
+          className={Style.select}
+          value={filterCreate}
+          onChange={handleSortCreate}
+        >
+          <option value="all"> All </option>
+          <option value="api"> Api </option>
+          <option value="created"> Created </option>
+        </select>
+        <br />
+        <span> Sort by Name </span>
+        <select
+          className={Style.select}
+          value={filterOrder}
+          onChange={handleSortOrder}
+        >
+          <option value="az"> A - Z </option>
+          <option value="za"> Z - A</option>
+        </select>
+        <br />
+      </div>
+
+      <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} />
+      <Cards allDogs={currentDogs} />
+      <Pagination
+        dogsCardsPerPage={dogsCardsPerPage}
+        allDogs={allDog.length}
+        paginado={paginado}
+        paginadoPrev={paginadoPrev}
+        paginadoNext={paginadoNext}
+        currentPage={currentPage}
+      />
     </div>
   );
 }

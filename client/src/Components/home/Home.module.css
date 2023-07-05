@@ -4,6 +4,24 @@
   align-items: center;
 }
 
+.topBar {
+  background-color: green;
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.seBar {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  width: 80px;
+  height: 80px;
+}
 .homeTitle {
   margin-top: 30px;
   margin-bottom: 20px;
@@ -11,4 +29,42 @@
   color: green;
   font-family: monospace;
   -webkit-text-stroke: 2px rgb(255, 255, 255);
+}
+
+.filters {
+  display: flex;
+  gap: 2rem;
+  margin-top: 30px;
+  width: 900px;
+}
+
+.select {
+  width: 200px;
+  height: 40px;
+  line-height: 28px;
+  padding: 0 1rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  outline: none;
+  background-color: green;
+  box-shadow: var(--box_shadow_create);
+  color: white;
+  margin-bottom: 3rem;
+}
+
+.buttonCreate {
+  display: flex;
+  border: 1px solid gold;
+  border-radius: 20px;
+  width: 155px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  background-color: gold;
+  color: black;
+  transition: background-color 0.3s;
+}
+
+.buttonCreate:hover {
+  background-color: #f3f3f4;
 }

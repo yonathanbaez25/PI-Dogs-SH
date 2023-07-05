@@ -1,8 +1,48 @@
 .searchContainer {
-  border: none;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.input {
+  width: 80%;
+  height: 30px;
+  line-height: 28px;
+  padding: 0 1rem;
+  padding-left: 2.5rem;
+  border: 2px solid transparent;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   outline: none;
-  padding: 10px;
-  width: 150px;
-  line-height: 30px;
-  margin-bottom: 30px;
+  background-color: #f3f3f4;
+  color: #0d0c22;
+  transition: 0.3s ease;
+}
+
+.input::placeholder {
+  color: #0d0c22;
+}
+
+.input:focus,
+input:hover {
+  outline: none;
+  border-color: gold;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
+}
+
+.btn {
+  width: 20%;
+  height: 30px;
+  background-color: gold;
+  border: none;
+  border-radius: 0 5px 5px 0;
+}
+
+.btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.searchContainer form {
+  display: flex;
 }

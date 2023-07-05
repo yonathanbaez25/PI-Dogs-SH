@@ -46,8 +46,10 @@ const reducer = (state = initialState, actions) => {
       const filterDogs =
         payload === "all"
           ? state.filterDogs
-          : state.filterDogs.filter((dog) =>
-              dog.temperament?.includes(payload)
+          : state.filterDogs.filter(
+              (dog) =>
+                dog.temperament?.includes(payload) ||
+                dog.temperamentss?.includes(payload)
             );
       return {
         ...state,
