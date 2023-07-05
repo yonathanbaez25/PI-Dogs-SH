@@ -12,6 +12,20 @@ const getDogs = async (req, res) => {
   try {
     const { data } = await axios.get(`${URL}?api_key=${YOUR_API_KEY}`);
 
+    const dogsApi = data.map((dog) => {
+      return {
+        id: dog.id,
+        name: dog.name,
+        life_span: dog.life_span,
+        temperament: dog.temperament,
+        minWeight: dog.weight.metric.slice(0, 2).replace(" ", ""),
+        maxWeight: dog.weight.metric.slice(4).replace(" ", ""),
+        minHeight: dog.height.metric.slice(0, 2).replace(" ", ""),
+        maxHeight: dog.height.metric.slice(4).replace(" ", ""),
+        image: dog.image.url,
+      };
+    });
+
     if (name) {
       const dog = await Dog.findAll({
         where: {
@@ -27,18 +41,31 @@ const getDogs = async (req, res) => {
       });
       if (dog.length !== 0) {
         const dogsDBn = dog.map((dog) => {
-          const { id, image, name, height, weight, life_span, temperaments } =
-            dog;
+          const {
+            id,
+            image,
+            name,
+            minHeight,
+            maxHeight,
+            minWeight,
+            maxWeight,
+            life_span,
+            temperaments,
+            dataBaseDog,
+          } = dog;
           const temperament = temperaments.map((temp) => temp.name);
 
           return {
             id,
             image,
             name,
-            height,
-            weight,
+            minHeight,
+            maxHeight,
+            minWeight,
+            maxWeight,
             life_span,
             temperament,
+            dataBaseDog,
           };
         });
         const dbDogs = [];
@@ -48,8 +75,8 @@ const getDogs = async (req, res) => {
       }
 
       for (let i = 0; i < data.length; i++) {
-        if (data[i].name.toLowerCase().includes(name.toLowerCase())) {
-          dogs.push(data[i]);
+        if (dogsApi[i].name.toLowerCase().includes(name.toLowerCase())) {
+          dogs.push(dogsApi[i]);
         }
       }
       return res.status(200).json(dogs);
@@ -65,25 +92,38 @@ const getDogs = async (req, res) => {
       });
 
       const dogsDBn = dogDB.map((dog) => {
-        const { id, image, name, height, weight, life_span, temperaments } =
-          dog;
-        const temperament = temperaments.map((temp) => temp.name);
+        const {
+          id,
+          image,
+          name,
+          minHeight,
+          maxHeight,
+          minWeight,
+          maxWeight,
+          life_span,
+          temperaments,
+          dataBaseDog,
+        } = dog;
+        const temperamentss = temperaments.map((temp) => temp.name);
 
         return {
           id,
           image,
           name,
-          height,
-          weight,
+          minHeight,
+          maxHeight,
+          minWeight,
+          maxWeight,
           life_span,
-          temperament,
+          temperamentss,
+          dataBaseDog,
         };
       });
       const dbDogs = [];
 
       dbDogs.push(...dogsDBn);
 
-      const allDogs = [...data].concat(dbDogs);
+      const allDogs = [...dogsApi].concat(dbDogs);
       res.status(200).json(allDogs);
     }
   } catch (error) {
@@ -92,17 +132,35 @@ const getDogs = async (req, res) => {
 };
 
 const getDogsByID = async (req, res) => {
-  const { id } = req.params;
-
-  const { data } = await axios.get(`${URL}?api_key=${YOUR_API_KEY}`);
   try {
+  } catch (error) {}
+  try {
+    const { id } = req.params;
+
+    const { data } = await axios.get(`${URL}?api_key=${YOUR_API_KEY}`);
+
+    const dogsApi = data.map((dog) => {
+      return {
+        id: dog.id,
+        name: dog.name,
+        life_span: dog.life_span,
+        temperament: dog.temperament,
+        minWeight: dog.weight.metric.slice(0, 2).replace(" ", ""),
+        maxWeight: dog.weight.metric.slice(4).replace(" ", ""),
+        minHeight: dog.height.metric.slice(0, 2).replace(" ", ""),
+        maxHeight: dog.height.metric.slice(4).replace(" ", ""),
+        image: dog.image.url,
+      };
+    });
+
     if (Number(id) <= 264) {
-      const dog = data.find((element) => element.id === Number(id));
+      const dog = dogsApi.find((element) => element.id === Number(id));
       if (dog) {
+        console.log(dog);
         return res.status(200).json(dog);
       }
     } else {
-      const dogDB1 = await Dog.findByPk(id, {
+      const dogDB = await Dog.findByPk(id, {
         include: {
           model: Temperament,
           attributes: ["name"],
@@ -111,37 +169,40 @@ const getDogsByID = async (req, res) => {
           },
         },
       });
-      const dogDB = [];
 
-      dogDB.push(dogDB1);
-
-      console.log(dogDB);
-
-      const dogsDBn = dogDB.map((dog) => {
-        const { id, image, name, height, weight, life_span, temperaments } =
-          dog;
-        const temperament = temperaments.map((temp) => temp.name);
-
-        return {
+      if (dogDB) {
+        const {
           id,
           image,
           name,
-          height,
-          weight,
+          minHeight,
+          maxHeight,
+          minWeight,
+          maxWeight,
+          life_span,
+          temperaments,
+          dataBaseDog,
+        } = dogDB;
+        const temperament = temperaments.map((temp) => temp.name);
+
+        const dog = {
+          id,
+          image,
+          name,
+          minHeight,
+          maxHeight,
+          minWeight,
+          maxWeight,
           life_span,
           temperament,
+          dataBaseDog,
         };
-      });
-      const dbDogs = [];
 
-      dbDogs.push(...dogsDBn);
-
-      if (dbDogs) {
-        return res.status(200).json(dbDogs);
+        return res.status(200).json(dog);
       }
     }
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.json({ err: error.message });
   }
 };
 
