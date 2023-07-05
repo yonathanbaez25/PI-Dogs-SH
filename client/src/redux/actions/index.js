@@ -1,8 +1,12 @@
 import {
   ADD_DOG,
+  CREATE,
+  FILTER_TEMPERAMENTS,
+  FILTER_WEIGHT,
   GET_DOG_BY_ID,
   GET_DOG_BY_RAZA,
   GET_TEMPERAMENTS,
+  ORDER,
   POST_DOG,
 } from "../types/index.js";
 import axios from "axios";
@@ -76,5 +80,33 @@ export const postDog = (dog) => {
     } catch (error) {
       window.alert(error);
     }
+  };
+};
+
+export const filteredByTemperaments = (payload) => {
+  return {
+    type: FILTER_TEMPERAMENTS,
+    payload,
+  };
+};
+
+export const filteredByCreate = (payload) => {
+  return {
+    type: CREATE,
+    payload,
+  };
+};
+
+export const filteredByOrder = (payload) => {
+  return {
+    type: ORDER,
+    payload,
+  };
+};
+
+export const filteredByWeight = (payload) => {
+  return {
+    type: FILTER_WEIGHT,
+    payload,
   };
 };

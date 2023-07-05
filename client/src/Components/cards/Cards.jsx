@@ -3,7 +3,6 @@ import style from "./Cards.module.css";
 import Card from "../card/Card";
 
 export default function Cards({ allDogs }) {
-  //console.log(allDogs);
   return (
     <div className={style.cardContainer}>
       {allDogs?.map((dog) => (
@@ -13,7 +12,12 @@ export default function Cards({ allDogs }) {
           name={dog.name}
           image={dog.image?.url || dog.image}
           temperament={dog.temperament}
-          peso={dog.weight?.metric}
+          temperaments={dog.temperamentss
+            ?.map((temperament) => temperament)
+            .join(", ")}
+          weight={dog.weight?.metric}
+          minWeight={dog.minWeight}
+          maxWeight={dog.maxWeight}
         />
       ))}
     </div>

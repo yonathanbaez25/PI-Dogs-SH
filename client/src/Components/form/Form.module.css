@@ -1,0 +1,17 @@
+.back {
+  background-color: green;
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.return {
+  font-size: 1.3em;
+  margin-left: 20px;
+  color: rgb(35, 35, 35);
+}
+
+img {
+  width: 70px;
+  height: 70px;
+}

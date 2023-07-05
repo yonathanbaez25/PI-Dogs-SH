@@ -42,3 +42,10 @@
   color: #ffffff;
   font-size: 0.9em;
 }
+
+a:link,
+a:visited,
+a:active {
+  text-decoration: none;
+  color: gold;
+}

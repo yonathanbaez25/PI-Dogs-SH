@@ -1,5 +1,8 @@
 body {
-  background-image: url(https://www.elconfidencial.com/alma-corazon-vida/2019-05-26/perros-sonrien-mascotas-simpaticos-chuchos_2010406/);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("../../img/perroLanding2.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .main {
@@ -32,4 +35,27 @@ img {
   justify-content: center;
   align-items: center;
   color: rgb(255, 255, 255);
+}
+
+.buttonSubmit {
+  display: flex;
+  border: 2px solid gold;
+  border-radius: 10px;
+  width: 240px;
+  height: 60px;
+  margin-top: 50px;
+  flex-flow: column wrap;
+  align-items: center;
+  font-size: larger;
+  font-weight: 900;
+  justify-content: center;
+  background-color: #026d30;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.buttonSubmit:hover {
+  background-color: gold;
+  border: 2px solid #026d30;
+  color: black;
 }

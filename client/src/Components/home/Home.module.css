@@ -5,9 +5,10 @@
 }
 
 .homeTitle {
-  margin-top: 75px;
-  margin-bottom: 50px;
+  margin-top: 30px;
+  margin-bottom: 20px;
   font-size: 76px;
   color: green;
   font-family: monospace;
+  -webkit-text-stroke: 2px rgb(255, 255, 255);
 }
